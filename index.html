@@ -1,0 +1,34 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クリップボード読み取りサイト</title>
+</head>
+<body>
+    <button type="button" id="btn">クリップボード読み取り</button>
+    <p>文字：</p>
+    <p id="text"></p>
+    <br />
+    <p>URL：</p>
+    <a href="" id="url"></a>
+    <p id="text2"></p>
+    <script>
+        document.getElementById('btn').addEventListener('click', async () => {
+            const text = await navigator.clipboard.readText();
+
+            if (text.indexOf('http') == 0 || text.indexOf('https') == 0 || text.indexOf('www') == 0) {
+                document.getElementById('text').innerHTML = "<p>文字を検知できませんでした。</p>";
+                document.getElementById('text2').innerHTML = "<p></p>";
+                document.getElementById('url').href = text;
+                document.getElementById('url').innerHTML = text;
+            }
+            else {
+                document.getElementById('text').innerHTML = "<p>" + text + "</p>";
+                document.getElementById('text2').innerHTML = "<p>URLを検知できませんでした。</p>";
+                document.getElementById('url').href = "";
+                document.getElementById('url').innerHTML = "";
+            }
+        });
+    </script>
+</body>
+</html>
